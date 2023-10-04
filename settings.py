@@ -1,9 +1,14 @@
-import os
-from os.path import join, dirname
-from dotenv import load_dotenv
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-dotenv_path = join(dirname(__file__), '.env')
-load_dotenv(dotenv_path)
 
-GROUP_KEY = os.environ.get("GROUP_KEY")
-KEYBOARD_KEY = os.environ.get("KEYBOARD_KEY")
+class Settings(BaseSettings):
+    server_host: str = '127.0.0.1'
+    server_port: int = 8000
+
+    group_key: str
+    keyboard_key: str
+
+    model_config = SettingsConfigDict(env_file='.env', env_file_encoding='utf-8')
+
+
+config = Settings()
