@@ -1,56 +1,26 @@
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 from vk_api.utils import get_random_id
-from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 
-
-from bs4 import BeautifulSoup
+from settings import GROUP_KEY, KEYBOARD_KEY
+from keyboards import keyboard
+from utils import get_weather
 
 import requests
 import wikipedia
+import logging
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 
-def get_weather(city: str='москва'):
-    city = city.lower()
-    request = requests.get('https://sinoptik.ua/погода-'+city)
-    b = BeautifulSoup(request.text, 'html.parser')
-    
-    
-    p3 = b.select('.temperature .p3')
-    weather1 = p3[0].getText()
-    p4 = b.select('.temperature .p4')
-    weather2 = p4[0].getText()
-    p5 = b.select('.temperature .p5')
-    weather3 = p5[0].getText()
-    p6 = b.select('.temperature .p6')
-    weather4 = p6[0].getText()
-    
-    result = 'Morning: '+weather1+' '+weather2
-    result += ' Day: '+weather3+' '+weather4
-    
-    return result
-    
 
-group_key = ""
+
+group_key = GROUP_KEY
 
 
 vk_session = vk_api.VkApi(token=group_key)
 longpoll = VkLongPoll(vk_session)
 vk = vk_session.get_api()
 print('vk_session is created')
-
-
-
-
-keyboard = VkKeyboard(one_time=True)
-keyboard.add_button('Hello', color=VkKeyboardColor.POSITIVE)
-keyboard.add_button('Goodbay', color=VkKeyboardColor.NEGATIVE)
-keyboard.add_line()
-keyboard.add_location_button()
-keyboard.add_line()
-keyboard.add_vkpay_button(hash="action=transfer-to-group&group_id=222723275")
-print('keyboard is created')
-
 
 
 for event in longpoll.listen():
@@ -92,7 +62,7 @@ for event in longpoll.listen():
         elif (ev_text.startswith('keyboard')):
             print('event keyboard')
             vk.messages.send(keyboard=keyboard.get_keyboard(),
-                             key= (),
+                             key= (KEYBOARD_KEY),
                             server= ("https://lp.vk.com/whp/222723275"),
                              ts = ("121"),
                              user_id = event.user_id,
