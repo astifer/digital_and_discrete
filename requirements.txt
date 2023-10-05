@@ -3,4 +3,4 @@ vk_api==11.9.9
 beautifulsoup4==4.12.2
 wikipedia==1.4.0
 pydantic==2.4.2
-pydantic_settings
+pydantic_settings==2.0.3

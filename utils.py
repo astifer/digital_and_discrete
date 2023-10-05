@@ -62,13 +62,13 @@ def manage_event(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll)
     elif event.text.startswith('keyboard'):
         logging.info('event keyboard')
         vk_api_method.messages.send(keyboard=test_keyboard.get_keyboard(),
-                            key= (config.keyboard_key),
-                            server= ("https://lp.vk.com/whp/222723275"),
-                            ts = ("121"),
-                            user_id = event.user_id,
-                            random_id = get_random_id(),
-                            message='Keyboard:'
-                             )
+            key= (config.keyboard_key),
+            server= ("https://lp.vk.com/whp/222723275"),
+            ts = ("121"),
+            user_id = event.user_id,
+            random_id = get_random_id(),
+            message='Keyboard:'
+        )
         return
         
     elif event.text.startswith('weather'):
