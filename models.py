@@ -36,11 +36,12 @@ class User():
         self.statistic = None
         
     def run_test(self,test_id: int)->None:
-        pass
+        logging.info("Run!!")
+        
     
     
     def get_statistic(self)->list:
-        pass
+        return
     
     
     def __str__(self):

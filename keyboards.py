@@ -1,5 +1,7 @@
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
-
+from tests.content import all_tests
+import logging
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 keyboard = VkKeyboard(one_time=True)
 keyboard.add_button('Hello', color=VkKeyboardColor.POSITIVE)
@@ -28,3 +30,9 @@ menu_keyboard.add_button('exit', color=VkKeyboardColor.NEGATIVE)
 profile_keyboard = VkKeyboard(one_time=True)
 profile_keyboard.add_button('Edit name', color=VkKeyboardColor.POSITIVE)
 profile_keyboard.add_button('Edit email', color=VkKeyboardColor.NEGATIVE)
+
+
+test_choice_keyboard = VkKeyboard(one_time=True)
+for test in all_tests:
+    test_choice_keyboard.add_button(all_tests[test].name)
+test_choice_keyboard.add_button('Exit', color=VkKeyboardColor.NEGATIVE)

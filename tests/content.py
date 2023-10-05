@@ -19,8 +19,10 @@ test_a = Test(
 )
 
 test_a.description=f'\n {test_a.name} {test_a.id}\n This is a simple quizz abuot nature. If you know smth about our Earth, click start!'
+all_tests_desription = f"{test_a.description} \n {None}"
 
-
-
-
-all_tests_desription =f"{test_a.description} \n {None}"
+all_tests = {
+    
+    f'{test_a.name}': test_a,
+    
+}

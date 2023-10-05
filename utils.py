@@ -1,6 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import logging
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+
 import wikipedia
 
 from vk_api.longpoll import VkLongPoll

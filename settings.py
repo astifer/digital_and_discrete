@@ -1,4 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
+import logging
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 
 class Settings(BaseSettings):

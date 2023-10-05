@@ -13,18 +13,29 @@ import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 
-def drive_test(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
+def drive_test(event: VkLongPoll.DEFAULT_EVENT_CLASS, user: User, vk_api_method, longpoll):
     vk_api_method.messages.send(
+                            keyboard=keyboards.test_choice_keyboard.get_keyboard(),
+                            key= (config.keyboard_key),
+                            server= ("https://lp.vk.com/whp/222723275"),
+                            ts = ("121"),
                             user_id = event.user_id,
                             random_id = get_random_id(),
-                            message=test_a.description
+                            message=all_tests_desription
                             )
-    
+    position='test_choice'
     for event in longpoll.listen():
         
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
             
-            if event.text == 'exit':
+            if position=='test_choice' and event.text in all_tests:
+                test_id = all_tests[event.text].id
+                user.run_test(test_id=test_id)
+                position = 'test done'
+                
+            elif position=='test_choice' and event.text == 'exit':
+                break
+            else:
                 break
 
 
@@ -88,7 +99,7 @@ def welcome(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
                         message=f'Lets start doing. We have some tests. Look!'
                     )
                     position = 'tests'
-                    drive_test(event=event, vk_api_method=vk_api_method, longpoll=longpoll)
+                    drive_test(event=event, user=user, vk_api_method=vk_api_method, longpoll=longpoll)
                 elif event.text == 'Statistic':
                     vk_api_method.messages.send(
                         user_id = event.user_id,
@@ -104,16 +115,15 @@ def welcome(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
                     )
                     
             elif position=='profile':
-                
-                pass
+                return
                 
             elif position=='tests':
                 
-                pass
+                return
             
             elif position=='statistic':
                 
-                pass
+                return
                 
                      
     vk_api_method.messages.send(
