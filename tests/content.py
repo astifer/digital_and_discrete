@@ -97,7 +97,7 @@ test_c = Test(
     actual_answers = [1, 0, 2, 1, 3, 2, 1, 0, 0, 2]
 )
 
-test_c.description=f'\n {test_c.name} {test_с.id}\n This is a simple quizz for fiding simple numbers. Be attentive, click start!'
+test_c.description=f'\n {test_c.name} {test_c.id}\n This is a simple quizz for fiding simple numbers. Be attentive, click start!'
 
 
 all_tests = {
