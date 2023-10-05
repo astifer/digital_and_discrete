@@ -105,3 +105,5 @@ all_tests = {
     test_b.name: test_b,
     test_c.name : test_c
 }
+
+all_tests_desription = f"{test_a.description} \n {test_b.description} \n {test_c.description}"
