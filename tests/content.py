@@ -1,5 +1,5 @@
 import random
-from models.test import Test
+from models import Test
 
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
