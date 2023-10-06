@@ -2,7 +2,7 @@ import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 
 from tools.settings import config
-from tools.utils import manage_event
+from manager import manage_event
 from models.content import user_manual
 
 import requests

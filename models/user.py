@@ -6,8 +6,7 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 from vk_api.utils import get_random_id
 from sklearn.metrics import accuracy_score
 
-from tools.settings import config
-import models.keyboards as keyboards
+
 from models.content import all_tests
 from models.statistic import Statistic
 
