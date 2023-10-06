@@ -5,4 +5,6 @@ wikipedia==1.4.0
 pydantic==2.4.2
 pydantic_settings==2.0.3
 importlib_metadata
-pandas
+pandas==1.3.5
+scikit-learn
+functools

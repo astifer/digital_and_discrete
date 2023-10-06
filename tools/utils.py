@@ -7,15 +7,31 @@ import wikipedia
 
 from vk_api.longpoll import VkLongPoll
 from vk_api.utils import get_random_id
+from vk_api.keyboard import VkKeyboard
+from functools import lru_cache
 
 from models.keyboards import *
 from tools.settings import config
 from manager import welcome
 
-def send_mess(event, vk_api_method):
+@lru_cache(maxsize=None)
+def send_mess(event, vk_api_method, message):
+    vk_api_method.messages.send(
+            user_id = event.user_id,
+            random_id = get_random_id(),
+            message=message
+        )
     pass
 
-def send_mess_kb(event, vk_api_method, keyboard):
+def send_mess_kb(event, vk_api_method, keyboard: VkKeyboard, message: str):
+    vk_api_method.messages.send(keyboard=keyboard.get_keyboard(),
+            key= (config.keyboard_key),
+            server= ("https://lp.vk.com/whp/222723275"),
+            ts = ("121"),
+            user_id = event.user_id,
+            random_id = get_random_id(),
+            message=message
+        )
     pass
 
 def get_weather(city: str='москва'):

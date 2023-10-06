@@ -10,6 +10,7 @@ import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 from tools.settings import config
+from tools.utils import send_mess, send_mess_kb
 import models.keyboards as keyboards
 
 class Test():
@@ -54,15 +55,9 @@ class Test():
         position=0
         start_time = time.time()
         
-        vk_api_method.messages.send(
-                            keyboard=keyboards.test_keyboard.get_keyboard(),
-                            key= (config.keyboard_key),
-                            server= ("https://lp.vk.com/whp/222723275"),
-                            ts = ("121"),
-                            user_id = event.user_id,
-                            random_id = get_random_id(),
-                            message=f"Lets go!\n {self.questions[position]} \n {self.parse_pa(self.possible_answers[position])}"
-                            )
+        send_mess_kb(event=event, vk_api_method=vk_api_method, 
+                     keyboard=keyboards.test_keyboard,
+                     message=f"Lets go!\n {self.questions[position]} \n {self.parse_pa(self.possible_answers[position])}")
         
         logging.info(f'user starts test {self.name}')
         
@@ -82,27 +77,14 @@ class Test():
                     logging.info(f'score: {score}, time: {form_time}')
                     break
                 
-                mess = self.questions[position] + "\n" +self.parse_pa(self.possible_answers[position])
-                vk_api_method.messages.send(
-                                keyboard=keyboards.test_keyboard.get_keyboard(),
-                                key= (config.keyboard_key),
-                                server= ("https://lp.vk.com/whp/222723275"),
-                                ts = ("121"),
-                                user_id = event.user_id,
-                                random_id = get_random_id(),
-                                message=mess
-                                )
+                send_mess_kb(event=event, vk_api_method=vk_api_method, 
+                             keyboard=keyboards.test_keyboard,
+                             message = self.questions[position] + "\n" +self.parse_pa(self.possible_answers[position]))
                 
         
-        vk_api_method.messages.send(
-                            keyboard=keyboards.test_keyboard.get_keyboard(),
-                            key= (config.keyboard_key),
-                            server= ("https://lp.vk.com/whp/222723275"),
-                            ts = ("121"),
-                            user_id = event.user_id,
-                            random_id = get_random_id(),
-                            message=f"Your score is {score}, time: {form_time}"
-                            ) 
+        send_mess_kb(event=event, vk_api_method=vk_api_method, 
+                  keyboard=keyboards.test_keyboard,
+                  message=f"Your score is {score}, time: {form_time}") 
         
         self.statistic['acc'].append(score)
         self.statistic['tm'].append(form_time)
