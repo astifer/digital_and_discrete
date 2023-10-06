@@ -5,7 +5,7 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 from vk_api.utils import get_random_id
 
 from settings import config
-from tests.content import test_a, test_b, test_c, all_tests, all_tests_desription
+from content import test_a, test_b, test_c, all_tests, all_tests_desription
 import keyboards
 
 import logging
