@@ -23,6 +23,7 @@ def drive_test(event: VkLongPoll.DEFAULT_EVENT_CLASS, user: User, vk_api_method,
                             random_id = get_random_id(),
                             message=all_tests_desription
                             )
+    
     position='test_choice'
     for event in longpoll.listen():
         
