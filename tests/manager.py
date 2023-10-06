@@ -31,7 +31,7 @@ def drive_test(event: VkLongPoll.DEFAULT_EVENT_CLASS, user: User, vk_api_method,
             
             if position=='test_choice' and event.text in all_tests:
 
-                user.run_test(test_name=event.text)
+                user.run_test(test_name=event.text, event=event, longpoll=longpoll, vk_api_method=vk_api_method)
                 position = 'test done'
                 
             elif position=='test_choice' and event.text == 'exit':

@@ -81,9 +81,9 @@ class User():
         self.email = ''
         self.statistic = None
         
-    def run_test(self, test_name: int)->None:
+    def run_test(self, test_name: int, event: VkEventType, longpoll: VkLongPoll, vk_api_method)->None:
         logging.info(f"{self.name} run {test_name}")
-        all_tests[test_name].run(self.id)
+        all_tests[test_name].run(self.id, event=event, longpoll=longpoll, vk_api_method=vk_api_method)
         
     
     
