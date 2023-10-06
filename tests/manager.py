@@ -5,7 +5,7 @@ from vk_api.utils import get_random_id
 
 import keyboards
 from settings import config
-from models import User
+from tests.models import User 
 from tests.content import * 
 
 import enum
@@ -30,8 +30,8 @@ def drive_test(event: VkLongPoll.DEFAULT_EVENT_CLASS, user: User, vk_api_method,
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
             
             if position=='test_choice' and event.text in all_tests:
-                test_id = all_tests[event.text].id
-                user.run_test(test_id=test_id)
+
+                user.run_test(test_name=event.text)
                 position = 'test done'
                 
             elif position=='test_choice' and event.text == 'exit':

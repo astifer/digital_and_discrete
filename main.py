@@ -8,7 +8,7 @@ import requests
 
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
-qq
+
 
 group_key = config.group_key
 

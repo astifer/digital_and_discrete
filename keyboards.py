@@ -12,7 +12,7 @@ keyboard.add_line()
 keyboard.add_vkpay_button(hash="action=transfer-to-group&group_id=222723275")
 
 
-test_keyboard = VkKeyboard(one_time=True)
+test_keyboard = VkKeyboard(inline=True)
 test_keyboard.add_button('A')
 test_keyboard.add_button('B')
 test_keyboard.add_button('C')
