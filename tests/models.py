@@ -1,10 +1,15 @@
 import enum
 import random
-import logging
-from tests.content import *
-import keyboards
+
 from vk_api.longpoll import VkLongPoll, VkEventType
 from vk_api.utils import get_random_id
+
+from settings import config
+from tests.content import test_a, test_b, test_c, all_tests, all_tests_desription
+import keyboards
+
+import logging
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 
 class Test():
@@ -43,10 +48,13 @@ class Test():
                             message=f"Время пошло!\n {self.questions[position]}"
                             )
         
+        logging.info(f'user starts test {self.name}')
+        
         for event in longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
                 
                 user_answers[position] = event.text
+                logging.info(f'user {position }answer is {event.text}')
                 
                 vk_api_method.messages.send(
                                 keyboard=keyboards.test_keyboard.get_keyboard(),

@@ -6,7 +6,7 @@ from vk_api.utils import get_random_id
 import keyboards
 from settings import config
 from tests.models import User 
-from tests.content import * 
+from tests.content import all_tests, all_tests_desription 
 
 import enum
 import logging
