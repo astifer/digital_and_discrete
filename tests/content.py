@@ -5,8 +5,6 @@ from settings import config
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-      
-     
 test_a = Test(
     name="Geography",
     description="Check your geography knowledge",
