@@ -1,5 +1,5 @@
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
-from tests.content import all_tests
+from models.content import all_tests
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 

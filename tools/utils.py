@@ -8,10 +8,15 @@ import wikipedia
 from vk_api.longpoll import VkLongPoll
 from vk_api.utils import get_random_id
 
-from keyboards import *
-from settings import config
-from tests.manager import welcome
+from models.keyboards import *
+from tools.settings import config
+from manager import welcome
 
+def send_mess(event, vk_api_method):
+    pass
+
+def send_mess_kb(event, vk_api_method, keyboard):
+    pass
 
 def get_weather(city: str='москва'):
     city = city.lower()
@@ -38,7 +43,7 @@ def manage_event(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll)
     message = event.text
     if event.text.startswith('help'):
         logging.info('help event')
-        message = 'What i can do: \n wikipedia: ... \n weather: ... \n TESTS!: tests'
+        message = 'What i can do: \n wikipedia: ... \n weather: ... \n tests:...'
         
     elif event.text.startswith('tests'):
         logging.info('tests event')
@@ -53,7 +58,7 @@ def manage_event(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll)
         logging.info('echo event')
         message = event.text.split()[1:]
         
-    elif event.text.startswith('wiki'):
+    elif event.text.startswith('wikipedia'):
         logging.info('wikipedia event')
         subject = ' '.join(event.text.split()[1:])
         try:
