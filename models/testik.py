@@ -48,7 +48,7 @@ class Test():
         else:
             raise Exception("Lenghts do not match")
         
-        logging.info("test created")
+        logging.info(f"test {self.name} created")
         
     def run(self, user_id, event: VkEventType, longpoll: VkLongPoll, vk_api_method):
         user_answers = [0]*10
@@ -63,8 +63,7 @@ class Test():
         
         for event in longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-                
-                logging.info(f'user {position} answer is {event.text}')
+
                 user_answers[position] = self.q_map_l[event.text]
                 
                 position+=1

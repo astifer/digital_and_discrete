@@ -3,10 +3,10 @@ import wikipedia
 
 from vk_api.longpoll import VkLongPoll, VkEventType
 from vk_api.utils import get_random_id
-
+import vk_api
 
 from tools.settings import config
-from tools.utils import send_mess, send_mess_kb, get_weather, get_random_id
+from tools.utils import send_mess, send_mess_kb, get_weather, get_random_id, send_stat
 
 from models.user import User 
 from models.content import all_tests, all_tests_desription 
@@ -80,23 +80,27 @@ def welcome(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
                               message=f'Your profile: {user}')
                     send_mess_kb(event=event, vk_api_method=vk_api_method,keyboard=menu_keyboard, message=f"Here is the main menu:")
                     position='menu'
+                    
                 elif event.text == 'Tests':
                     send_mess(event=event, vk_api_method=vk_api_method,
                               message=f'Lets start doing. We have some tests. Look!')
                     drive_test(event=event, user=user, vk_api_method=vk_api_method, longpoll=longpoll)
                     send_mess_kb(event=event, vk_api_method=vk_api_method,keyboard=menu_keyboard, message=f"Here is the main menu:")
                     position = 'menu'
+                    
                 elif event.text == 'Statistic':
-                    send_mess(event=event, vk_api_method=vk_api_method,
-                        message=f'Statistic: \n {user.get_statistic()}'
-                    )
-                    position='menu'
+                    user.get_statistic()
+                    send_stat(user=user,event=event, vk_api_method=vk_api_method, f_name='score_stat')
+                    send_stat(user=user, event=event, vk_api_method=vk_api_method, f_name='time_stat')
                     send_mess_kb(event=event, vk_api_method=vk_api_method,keyboard=menu_keyboard, message=f"Here is the main menu:")
+                    position='menu'
+                    
                 else:
                     send_mess(event=event, vk_api_method=vk_api_method,
                         message=f'Command not found'
                     )
                     send_mess_kb(event=event, vk_api_method=vk_api_method,keyboard=menu_keyboard, message=f"Here is the main menu:")
+                    position='menu'
             
                           
     send_mess(event=event, vk_api_method=vk_api_method, message="Finishing all progress")
@@ -155,4 +159,4 @@ def manage_event(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll)
                        )
             
     
-    
+

@@ -28,7 +28,7 @@ class Statistic():
         self.data['name'].append(test_name)
         self.data['score'].append(score)
         self.data['time'].append(time)
-        logging.info(f"succesfully append test data [{self.user_id}]")
+        logging.info(f"succesfully append test data [user_id:{self.user_id}]")
     
     def average_score_all(self)->float:
         if self.data['score']:
@@ -40,4 +40,7 @@ class Statistic():
     def get_all_stat(self)->pd.DataFrame:
         
         df = pd.DataFrame(self.data)
+        df.to_csv('data/user_data.csv')
+        
         return df
+    

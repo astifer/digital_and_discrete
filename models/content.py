@@ -1,14 +1,14 @@
 import random
 from models.testik import Test
 
-
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 user_manual = "Hello! This is simple bot Cradm Lozzer. What I can do? I have a few start command: \n"
 user_manual += "wikipedia - find info about subject, you write past command \n"
 user_manual += "weather - check the weather in city, you write past command \n"
-user_manual += "tests - a whole game with interesting quizzes and statistic!"
+user_manual += "tests - a whole game with interesting quizzes and statistic! \n"
+user_manual += "echo - default command"
 
 test_a = Test(
     name="Geography",
@@ -111,3 +111,5 @@ all_tests = {
 }
 
 all_tests_desription = f"{test_a.description} \n {test_b.description} \n {test_c.description}"
+
+logging.info('tests created')

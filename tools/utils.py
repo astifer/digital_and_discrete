@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
+import vk_api
 from vk_api.longpoll import VkLongPoll
 from vk_api.utils import get_random_id
 from vk_api.keyboard import VkKeyboard
@@ -30,6 +31,18 @@ def send_mess_kb(event, vk_api_method, keyboard: VkKeyboard, message: str):
             message=message
         )
     pass
+
+
+def send_stat(user, event, vk_api_method, f_name='score_stat'):
+    
+    upload = vk_api.VkUpload(vk_api_method)
+    photo = upload.photo_messages(f'data/{f_name}.jpeg')
+    owner_id = photo[0]['owner_id']
+    photo_id = photo[0]['id']
+    access_key = photo[0]['access_key']
+    attachment = f'photo{owner_id}_{photo_id}_{access_key}'
+    vk_api_method.messages.send(user_id=event.user_id, random_id=0, attachment=attachment)
+
 
 def get_weather(city: str='москва'):
     city = city.lower()

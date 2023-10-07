@@ -33,6 +33,9 @@ class User():
         info = self.statistic.get_all_stat()
         return info
     
+    def save_plot(self):
+        
+        return
     def __str__(self):
         
         result = f"\n Name: {self.name} \n Id: {self.id} \n Email: {self.email}"

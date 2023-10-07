@@ -1,5 +1,4 @@
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
-from models.content import all_tests
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
@@ -32,7 +31,12 @@ profile_keyboard.add_button('Edit name', color=VkKeyboardColor.POSITIVE)
 profile_keyboard.add_button('Edit email', color=VkKeyboardColor.NEGATIVE)
 
 
+all_tests = ['Geography', 'Counting', 'Simple numbers']
+
 test_choice_keyboard = VkKeyboard(one_time=True)
-for test in all_tests:
-    test_choice_keyboard.add_button(all_tests[test].name)
+for test_name in all_tests:
+    test_choice_keyboard.add_button(test_name)
+    
 test_choice_keyboard.add_button('Exit', color=VkKeyboardColor.NEGATIVE)
+
+logging.info('keyboards created')
