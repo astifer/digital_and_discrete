@@ -4,6 +4,7 @@ import time
 from vk_api.utils import get_random_id
 from sklearn.metrics import accuracy_score
 import pandas as pd
+import plotly.express as px
 
 from tools.settings import config
 from models.content import all_tests
@@ -41,6 +42,12 @@ class Statistic():
         
         df = pd.DataFrame(self.data)
         df.to_csv('data/user_data.csv')
+        
+        fig = px.bar(df, x="name", y="time",title="Time statistic")
+        fig.write_image('data/time_stat.jpeg')
+        
+        fig = px.bar(df, x="name", y="score",title="Score statistic")
+        fig.write_image('data/score_stat.jpeg')
         
         return df
     
