@@ -1,14 +1,14 @@
 import random
 from models.testik import Test
-
+import pandas as pd
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 user_manual = "Hello! This is simple bot Cradm Lozzer. What I can do? I have a few start command: \n"
-user_manual += "/wikipedia - find info about subject, you write past command \n"
-user_manual += "/weather - check the weather in city, you write past command \n"
-user_manual += "/tests - a whole game with interesting quizzes and statistic! \n"
-user_manual += "/echo - default command"
+user_manual += "wikipedia - find info about subject, you write past command \n"
+user_manual += "weather - check the weather in city, you write past command \n"
+user_manual += "tests - a whole game with interesting quizzes and statistic! \n"
+user_manual += "echo - default command"
 
 test_a = Test(
     name="Geography",
@@ -36,7 +36,18 @@ test_a = Test(
         ['Australia', 'Africa', 'Tunisia', 'Turkey'],
         ['South America', 'Africa', 'Eurasia', 'Australia']
         ],
-    actual_answers = [1, 0, 2, 1, 3, 2, 1, 0, 0, 2]
+    actual_answers = [1, 0, 2, 1, 3, 2, 1, 0, 0, 2],
+    links = ['https://en.wikipedia.org/wiki/Equator',
+             'https://www.wwf.org.uk/learn/wildlife/polar-bears',
+             'https://ru.wikipedia.org/wiki/Континент',
+             'https://en.wikipedia.org/wiki/Ocean',
+             'https://en.wikipedia.org/wiki/Earth_radius#:~:text=A%20nominal%20Earth%20radius%20is,km)%20for%20the%20following%20reasons',
+             'https://teacherscollegesj.org/which-country-is-known-as-the-boot/#:~:text=One%20of%20the%20most%20identifiable,bordered%20by%20the%20Tyrrhenian%20Sea',
+             'https://www.jluggage.com/blog/japan/why-is-japan-called-land-of-rising-sun/#:~:text=Japan-the%20Land%20of%20the%20Rising,mean%20“where%20the%20sun%20rises”',
+             'https://www.edarabia.com/turkey/flag/',
+             'https://misfitanimals.com/kangaroos/where-do-kangaroos-live/#:~:text=Kangaroos%20Natural%20Habitat.%20Kangaroos%20are,of%20the%20continent%20over%20time',
+             'https://en.wikipedia.org/wiki/Asia#:~:text=Asia%20is%20the%20largest%20continent,coastline%2C%20at%2062%2C800%20kilometres%20(39%2C022%C2%A0mi)'
+             ]
 )
 
 test_a.description=f'\n {test_a.name} {test_a.id}\n This is a simple quizz about geography. If you know smth about our Earth, click start!'
@@ -67,7 +78,18 @@ test_b = Test(
         ['1024', '128', '2048', '512'],
         ['9', '243', '81', '27']
         ],
-    actual_answers = [1, 0, 2, 1, 3, 2, 1, 0, 0, 2]
+    actual_answers = [1, 0, 2, 1, 3, 2, 1, 0, 0, 2],
+    links = ['https://calculator888.ru/',
+             'https://calculator888.ru/',
+             'https://calculator888.ru/',
+             'https://calculator888.ru/',
+             'https://calculator888.ru/',
+             'https://calculator888.ru/',
+             'https://calculator888.ru/',
+             'https://calculator888.ru/',
+             'https://calculator888.ru/',
+             'https://calculator888.ru/'
+             ]
 )
 
 test_b.description=f'\n {test_b.name} {test_b.id}\n This is a simple quizz for counting. Be attentive, click start!'
@@ -98,7 +120,18 @@ test_c = Test(
         ['131', '132', '136', '130'],
         ['994', '996', '991', '992']
         ],
-    actual_answers = [1, 0, 2, 1, 3, 2, 1, 0, 0, 2]
+    actual_answers = [1, 0, 2, 1, 3, 2, 1, 0, 0, 2],
+    links = ['http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php',
+             'http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php',
+             'http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php',
+             'http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php',
+             'http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php',
+             'http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php',
+             'http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php',
+             'http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php',
+             'http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php',
+             'http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php'
+             ]
 )
 
 test_c.description=f'\n {test_c.name} {test_c.id}\n This is a simple quizz for fiding simple numbers. Be attentive, click start!'
@@ -113,3 +146,8 @@ all_tests = {
 all_tests_desription = f"{test_a.description} \n {test_b.description} \n {test_c.description}"
 
 logging.info('tests created')
+
+users_data = pd.DataFrame(columns=['user_id','test_name','score','time'])
+users_data.to_csv('data/users_data.csv')
+
+logging.info('users table created')

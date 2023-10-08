@@ -17,37 +17,81 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
     
 class Statistic():
     data = {
-        'name': [],
-        'score': [],
-        'time': []        
+        'Geography': {
+            'score': [],
+            'time': [] 
+            },
+        'Counting': {
+            'score': [],
+            'time': [] 
+            },
+        'Simple numbers': {
+            'score': [],
+            'time': [] 
+            }
     }
     
     def __init__(self, user_id)->None:
         self.user_id = user_id
+        self.count = 0
         
     def add_complit(self, test_name: str, score: float, time)->None:
-        self.data['name'].append(test_name)
-        self.data['score'].append(score)
-        self.data['time'].append(time)
-        logging.info(f"succesfully append test data [user_id:{self.user_id}]")
-    
-    def average_score_all(self)->float:
-        if self.data['score']:
-            res = sum(self.data['score'])/len(self.data['score'])
-            return res
-        else:
-            return 0
+        self.count += 1
+        self.data[test_name]['score'].append(score)
+        self.data[test_name]['time'].append(time)
         
+        users_data = pd.read_csv('data/users_data.csv')
+        updated_data = users_data.append({'user_id': self.user_id,
+                                          'test_name': test_name,
+                                          'score': score,
+                                          'time': -float(time)}, ignore_index=True)
+        updated_data.to_csv('data/users_data.csv')
+        
+        
+        logging.info(f"[user_id:{self.user_id}] succesfully append test data")
+
+    def average_each(self)->str:
+        info = 'Avarage results: \n'
+        for test_name in self.data:
+            if self.data[test_name]['score']:
+                info+= f"{str(test_name)}: {sum(self.data[test_name]['score'])/len(self.data[test_name]['score']):.2f} \n"
+            
+        return info
+    
     def get_all_stat(self)->pd.DataFrame:
         
-        df = pd.DataFrame(self.data)
-        df.to_csv('data/user_data.csv')
+        users_data = pd.read_csv('data/users_data.csv')
+        if len(users_data)==0:
+            logging.info(f'[user_id:{self.user_id}] empty stat')
+            return False
         
-        fig = px.bar(df, x="name", y="time",title="Time statistic")
-        fig.write_image('data/time_stat.jpeg')
+        temp = users_data[users_data['user_id']==self.user_id]
         
-        fig = px.bar(df, x="name", y="score",title="Score statistic")
-        fig.write_image('data/score_stat.jpeg')
+        fig = px.line(data_frame=temp, x=[i for i in range(len(temp))], y="time",title="Time trajectory", markers=True, color='test_name')
+        fig.write_image(f'data/{self.user_id}_time_stat.jpeg')
         
-        return df
+        fig = px.line(data_frame=temp, x=[i for i in range(len(temp))], y="score",title="Score trajectory", markers=True, color='test_name')
+        fig.write_image(f'data/{self.user_id}_score_stat.jpeg')
+        
+        logging.info(f'[user_id:{self.user_id}] read and wrtie new stat')
+        
+        return True
     
+    def get_all_mean(self)->pd.DataFrame:
+        
+        users_data = pd.read_csv('data/users_data.csv')
+        if len(users_data)==0:
+            logging.info(f'[user_id:{self.user_id}] empty stat')
+            return False
+        
+        temp = users_data[users_data['user_id']==self.user_id]
+        
+        fig = px.line(data_frame=temp.groupby(['test_name']).mean().reset_index(), x=[i for i in range(len(temp))], y="time",title="Time statistic")
+        fig.write_image(f'data/{self.user_id}_time_stat.jpeg')
+        
+        fig = px.line(data_frame=temp.groupby(['test_name']).mean().reset_index(), x=[i for i in range(len(temp))], y="score",title="Score statistic")
+        fig.write_image(f'data/{self.user_id}_score_stat.jpeg')
+        
+        logging.info(f'[user_id:{self.user_id}] read and wrtie new stat')
+        
+        return True

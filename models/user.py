@@ -25,20 +25,21 @@ class User():
         self.statistic = Statistic(self.id)
         
     def run_test(self, test_name: int, event: VkEventType, longpoll: VkLongPoll, vk_api_method)->None:
-        logging.info(f"{self.name} run {test_name}")
-        score, elapased_time = all_tests[test_name].run(self.id, event=event, longpoll=longpoll, vk_api_method=vk_api_method)
+        logging.info(f"[user_id:{self.id}]  run {test_name}")
+        score, elapased_time, good_info = all_tests[test_name].run(self.id, event=event, longpoll=longpoll, vk_api_method=vk_api_method)
         self.statistic.add_complit(test_name, score, elapased_time)
+
+        return good_info
     
     def get_statistic(self):
-        info = self.statistic.get_all_stat()
-        return info
+        return self.statistic.get_all_stat()
     
     def save_plot(self):
         
         return
     def __str__(self):
         
-        result = f"\n Name: {self.name} \n Id: {self.id} \n Email: {self.email}"
+        result = f"\n Name: {self.name} \n Id: {self.id} \n Tests passed: {self.statistic.count}"
         return result
     
 

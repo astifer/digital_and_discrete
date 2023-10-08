@@ -30,10 +30,10 @@ def drive_test(event: VkLongPoll.DEFAULT_EVENT_CLASS, user: User, vk_api_method,
             
             if position=='test_choice' and event.text in all_tests:
 
-                user.run_test(test_name=event.text, event=event, longpoll=longpoll, vk_api_method=vk_api_method)
+                good_info = user.run_test(test_name=event.text, event=event, longpoll=longpoll, vk_api_method=vk_api_method)
                 send_mess_kb(event=event, vk_api_method=vk_api_method,
                             keyboard=test_choice_keyboard,
-                            message="You have done test! Congrats!")
+                            message="You have done test! Congrats!\n"+good_info)
                 
             elif event.text == 'Exit':
                 break
@@ -89,9 +89,13 @@ def welcome(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
                     position = 'menu'
                     
                 elif event.text == 'Statistic':
-                    user.get_statistic()
-                    send_stat(user=user,event=event, vk_api_method=vk_api_method, f_name='score_stat')
-                    send_stat(user=user, event=event, vk_api_method=vk_api_method, f_name='time_stat')
+                    if user.get_statistic():
+                        send_stat(user=user,event=event, vk_api_method=vk_api_method, f_name='score_stat')
+                        send_stat(user=user, event=event, vk_api_method=vk_api_method, f_name='time_stat')
+                        
+                        send_mess(event=event, vk_api_method=vk_api_method, 
+                                  message=user.statistic.average_each())
+                        
                     send_mess_kb(event=event, vk_api_method=vk_api_method,keyboard=menu_keyboard, message=f"Here is the main menu:")
                     position='menu'
                     
@@ -101,7 +105,7 @@ def welcome(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
                     )
                     send_mess_kb(event=event, vk_api_method=vk_api_method,keyboard=menu_keyboard, message=f"Here is the main menu:")
                     position='menu'
-            
+
                           
     send_mess(event=event, vk_api_method=vk_api_method, message="Finishing all progress")
     

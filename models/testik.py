@@ -27,19 +27,12 @@ class Test():
         "C": 2,
         "D": 3,
     }
-    statistic: {
-        'acc': [],
-        'tm': [],
-    }
     
-    def __init__(self, name, description, questions, possible_answers, actual_answers) -> None:
+    def __init__(self, name, description, questions, possible_answers, actual_answers, links) -> None:
         self.name = name
         self.id = random.randint(0,10000)
         self.description = description
-        self.statistic = {
-        'acc': [],
-        'tm': [],
-    }
+        self.links = links
         
         if len(questions)==len(possible_answers) and len(possible_answers)==len(actual_answers):
             self.questions = questions
@@ -59,13 +52,12 @@ class Test():
                      keyboard=keyboards.test_keyboard,
                      message=f"Lets go!\n {self.questions[position]} \n {self.parse_pa(self.possible_answers[position])}")
         
-        logging.info(f'user starts test {self.name}')
+        logging.info(f'[user_id:{user_id}]  starts test {self.name}')
         
         for event in longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
 
                 user_answers[position] = self.q_map_l[event.text]
-                
                 position+=1
                 
                 if position == 10:
@@ -73,7 +65,9 @@ class Test():
                     elapsed_time = end_time - start_time
                     form_time = '%.2f' % elapsed_time
                     score = accuracy_score(self.actual_answers, user_answers)
-                    logging.info(f'score: {score}, time: {form_time}')
+                    good_info = self.src_errors(user_answers)
+                    
+                    logging.info(f'[user_id:{user_id}] score: {score}, time: {form_time}')
                     break
                 
                 send_mess_kb(event=event, vk_api_method=vk_api_method, 
@@ -85,10 +79,8 @@ class Test():
                   keyboard=keyboards.test_keyboard,
                   message=f"Your score is {score}, time: {form_time}") 
         
-        self.statistic['acc'].append(score)
-        self.statistic['tm'].append(form_time)
-        
-        return score, form_time    
+
+        return score, form_time, good_info
           
     def parse_pa(self, list_of_a: list)->str:
         result = ''
@@ -98,9 +90,18 @@ class Test():
             
         return result
     
-    def get_stat(self):
-        '''
-        list with result anybody passed this test
-        '''
+    
+    def src_errors(self, ges):
+        errors = []
+        info ='Your errors: \n'
         
-        return self.statistic
+        for i in range(len(self.actual_answers)):
+
+            if ges[i] != self.actual_answers[i]:
+                errors.append(i) 
+        
+        for ind in errors:
+            info += f"{ind+1}. {self.links[ind]} \n"
+            
+        return info
+    
