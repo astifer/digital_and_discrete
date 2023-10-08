@@ -6,7 +6,7 @@ from vk_api.utils import get_random_id
 import vk_api
 
 from tools.settings import config
-from tools.utils import send_mess, send_mess_kb, get_weather, get_random_id, send_stat, add_user_to_data
+from tools.utils import send_mess, send_mess_kb, get_weather, get_random_id, send_stat, add_user_to_list
 
 from models.user import User 
 from models.content import all_tests, all_tests_desription 
