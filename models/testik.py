@@ -14,14 +14,14 @@ from tools.utils import send_mess, send_mess_kb
 import models.keyboards as keyboards
 
 class Test():
-    q_map: dict  = {
+    index2letter: dict  = {
         0: "A",
         1: "B",
         2: "C",
         3: "D",
     }
     
-    q_map_l: dict  = {
+    letter2index: dict  = {
         "A": 0,
         "B": 1,
         "C": 2,
@@ -52,14 +52,15 @@ class Test():
                      keyboard=keyboards.test_keyboard,
                      message=f"Lets go!\n {self.questions[position]} \n {self.parse_pa(self.possible_answers[position])}")
         
-        logging.info(f'[user_id:{user_id}]  starts test {self.name}')
         
         for event in longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-
-                user_answers[position] = self.q_map_l[event.text]
-                position+=1
                 
+                if event.text in self.letter2index:
+                    
+                    user_answers[position] = self.letter2index[event.text]
+                    position+=1
+                    
                 if position == 10:
                     end_time = time.time()
                     elapsed_time = end_time - start_time
@@ -85,7 +86,7 @@ class Test():
     def parse_pa(self, list_of_a: list)->str:
         result = ''
         for i in range(4):
-            result += self.q_map[i] + " : "
+            result += self.index2letter[i] + " : "
             result += list_of_a[i] + "\n"
             
         return result
@@ -102,6 +103,8 @@ class Test():
         
         for ind in errors:
             info += f"{ind+1}. {self.links[ind]} \n"
-            
+        
+        if len(errors)==0:
+            return None
         return info
     

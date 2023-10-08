@@ -31,6 +31,7 @@ def drive_test(event: VkLongPoll.DEFAULT_EVENT_CLASS, user: User, vk_api_method,
             if position=='test_choice' and event.text in all_tests:
 
                 good_info = user.run_test(test_name=event.text, event=event, longpoll=longpoll, vk_api_method=vk_api_method)
+                
                 send_mess_kb(event=event, vk_api_method=vk_api_method,
                             keyboard=test_choice_keyboard,
                             message="You have done test! Congrats!\n"+good_info)
@@ -40,7 +41,7 @@ def drive_test(event: VkLongPoll.DEFAULT_EVENT_CLASS, user: User, vk_api_method,
             else:
                 send_mess_kb(event=event, vk_api_method=vk_api_method,
                             keyboard=test_choice_keyboard,
-                            message=f"[drive_test]: Comand not found")
+                            message=f"Comand not found")
                 
     
 def welcome(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
@@ -66,6 +67,14 @@ def welcome(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
                     message='Lets make auth. What is your name?'
                 )
                 position='wait for name'
+                
+            elif position=='start' and event.text!='GO!':
+                vk_api_method.messages.send(
+                    user_id = event.user_id,
+                    random_id = get_random_id(),
+                    message='Command not found. Type GO! or exit'
+                )
+                position='start'
                 
             elif position=='wait for name' and event.text!='GO!':
                 name = event.text
@@ -134,7 +143,7 @@ def manage_event(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll)
         subject = ' '.join(event.text.split()[1:])
         try:
             message = wikipedia.summary(subject)
-        except LookupError(f"wikipedia couldnt find information about subject: {subject}"):
+        except:
             message = 'subject not found'
             
     elif event.text.startswith('keyboard'):

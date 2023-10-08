@@ -50,7 +50,7 @@ test_a = Test(
              ]
 )
 
-test_a.description=f'\n {test_a.name} {test_a.id}\n This is a simple quizz about geography. If you know smth about our Earth, click start!'
+test_a.description=f'{test_a.name}\n This is a simple quizz about geography. If you know smth about our Earth, click start!'
 
 test_b = Test(
     name="Counting",
@@ -92,7 +92,7 @@ test_b = Test(
              ]
 )
 
-test_b.description=f'\n {test_b.name} {test_b.id}\n This is a simple quizz for counting. Be attentive, click start!'
+test_b.description=f'{test_b.name} \n This is a simple quizz for counting. Be attentive, click start!'
 
 test_c = Test(
     name="Simple numbers",
@@ -134,7 +134,7 @@ test_c = Test(
              ]
 )
 
-test_c.description=f'\n {test_c.name} {test_c.id}\n This is a simple quizz for fiding simple numbers. Be attentive, click start!'
+test_c.description=f'{test_c.name}\n This is a simple quizz for fiding simple numbers. Be attentive, click start!'
 
 
 all_tests = {
