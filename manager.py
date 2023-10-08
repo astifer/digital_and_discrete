@@ -6,7 +6,7 @@ from vk_api.utils import get_random_id
 import vk_api
 
 from tools.settings import config
-from tools.utils import send_mess, send_mess_kb, get_weather, get_random_id, send_stat
+from tools.utils import send_mess, send_mess_kb, get_weather, get_random_id, send_stat, add_user_to_data
 
 from models.user import User 
 from models.content import all_tests, all_tests_desription 
@@ -32,8 +32,7 @@ def drive_test(event: VkLongPoll.DEFAULT_EVENT_CLASS, user: User, vk_api_method,
 
                 good_info = user.run_test(test_name=event.text, event=event, longpoll=longpoll, vk_api_method=vk_api_method)
                 
-                send_mess_kb(event=event, vk_api_method=vk_api_method,
-                            keyboard=test_choice_keyboard,
+                send_mess(event=event, vk_api_method=vk_api_method,
                             message="You have done test! Congrats!\n"+good_info)
                 
             elif event.text == 'Exit':
@@ -80,6 +79,7 @@ def welcome(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
                 name = event.text
                 user.name = name
                 send_mess_kb(event=event, vk_api_method=vk_api_method,keyboard=menu_keyboard, message=f"Hi, {name}. Here is the main menu:")
+                add_user_to_list()
                 position='menu'
             
             # Menu

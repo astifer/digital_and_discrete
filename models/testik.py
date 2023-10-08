@@ -76,8 +76,7 @@ class Test():
                              message = self.questions[position] + "\n" +self.parse_pa(self.possible_answers[position]))
                 
         
-        send_mess_kb(event=event, vk_api_method=vk_api_method, 
-                  keyboard=keyboards.test_keyboard,
+        send_mess(event=event, vk_api_method=vk_api_method,
                   message=f"Your score is {score}, time: {form_time}") 
         
 

@@ -70,6 +70,10 @@ def notify_all_users(vk_api_method):
                 message="We add new test!"
             )
             
+def add_user_to_list():
+    
+    pass
+
 
 @lru_cache(maxsize=None)
 def send_stat(user, event, vk_api_method, f_name='score_stat'):
