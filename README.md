@@ -40,4 +40,4 @@ Desription
 ```
 
 
-example: [example](data/tests.text)
+example: [example](data/tests.txt)
