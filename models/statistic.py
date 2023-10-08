@@ -41,12 +41,13 @@ class Statistic():
         self.data[test_name]['time'].append(time)
         
         users_data = pd.read_csv('data/users_data.csv')
-        updated_data = users_data.append({'user_id': self.user_id,
+        temp_df = pd.DataFrame({'user_id': self.user_id,
                                           'test_name': test_name,
                                           'score': score,
-                                          'time': -float(time)}, ignore_index=True)
-        updated_data.to_csv('data/users_data.csv')
+                                          'time': -float(time)}, index=[0])
         
+        updated_data = pd.concat([users_data, temp_df], ignore_index=True)
+        updated_data.to_csv('data/users_data.csv', index=False)
         
         logging.info(f"[user_id:{self.user_id}] succesfully append test data")
 

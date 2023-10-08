@@ -99,6 +99,8 @@ def welcome(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
                     
                 elif event.text == 'Statistic':
                     if user.get_statistic():
+                        send_mess(event=event, vk_api_method=vk_api_method, 
+                                  message='Statistic is loading...')
                         send_stat(user=user,event=event, vk_api_method=vk_api_method, f_name='score_stat')
                         send_stat(user=user, event=event, vk_api_method=vk_api_method, f_name='time_stat')
                         
@@ -120,6 +122,7 @@ def welcome(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
     
 
 def manage_event(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
+
     message = event.text
     if event.text.startswith('help'):
         logging.info('help event')
@@ -129,6 +132,7 @@ def manage_event(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll)
         logging.info('tests event')
         welcome(event=event, vk_api_method=vk_api_method, longpoll=longpoll)
         return
+        
         
     elif event.text.startswith('+'):
         logging.info('event plus!')

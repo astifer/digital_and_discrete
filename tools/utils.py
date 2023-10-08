@@ -12,6 +12,8 @@ from functools import lru_cache
 
 from tools.settings import config
 
+test_count = 3
+
 @lru_cache(maxsize=None)
 def send_mess(event, vk_api_method, message):
     vk_api_method.messages.send(
@@ -33,7 +35,43 @@ def send_mess_kb(event, vk_api_method, keyboard: VkKeyboard, message: str):
         )
     pass
 
+@lru_cache(maxsize=None)
+def check_update(vk_api_method):
+    cnt = 0
+    logging.info('check new tests')
+    
+    with open('data/tests.txt', 'r') as f:
+        data = f.readlines()
+        
+        for line in data:
+            if line == "$\n":
+                cnt+=1
+                
+        if cnt+1 != test_count and len(data) % 3 ==0:
+            add_new_test(vk_api_method)
+    pass
 
+
+def add_new_test(vk_api_method):
+    # adding to tests and ...
+    
+    notify_all_users(vk_api_method)
+    
+
+def notify_all_users(vk_api_method):
+    
+    with open('data/users.txt', 'r') as f:
+        users_idx = f.readlines()
+        
+        for user_id in users_idx:
+            vk_api_method.messages.send(
+                user_id = int(user_id),
+                random_id = get_random_id(),
+                message="We add new test!"
+            )
+            
+
+@lru_cache(maxsize=None)
 def send_stat(user, event, vk_api_method, f_name='score_stat'):
     
     upload = vk_api.VkUpload(vk_api_method)

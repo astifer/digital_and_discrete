@@ -148,6 +148,6 @@ all_tests_desription = f"{test_a.description} \n {test_b.description} \n {test_c
 logging.info('tests created')
 
 users_data = pd.DataFrame(columns=['user_id','test_name','score','time'])
-users_data.to_csv('data/users_data.csv')
+users_data.to_csv('data/users_data.csv', index=False)
 
 logging.info('users table created')

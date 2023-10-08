@@ -105,6 +105,6 @@ class Test():
             info += f"{ind+1}. {self.links[ind]} \n"
         
         if len(errors)==0:
-            return None
+            return ''
         return info
     
