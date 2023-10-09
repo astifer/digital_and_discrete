@@ -32,7 +32,7 @@ def drive_test(event: VkLongPoll.DEFAULT_EVENT_CLASS, user: User, vk_api_method,
 
                 good_info = user.run_test(test_name=event.text, event=event, longpoll=longpoll, vk_api_method=vk_api_method)
                 
-                send_mess(event=event, vk_api_method=vk_api_method,
+                send_mess_kb(event=event, vk_api_method=vk_api_method, keyboard=test_choice_keyboard,
                             message="You have done test! Congrats!\n"+good_info)
                 
             elif event.text == 'Exit':
