@@ -24,9 +24,9 @@ def thr():
         if stop_thr:
             break
         
-stop_thr = False
-schedule.every(1).minutes.do(job)
-threading.Thread(target=thr).start()
+# stop_thr = True
+# schedule.every(1).minutes.do(job)
+# threading.Thread(target=thr).start()
 
 group_key = config.group_key
 
