@@ -28,6 +28,12 @@ python main.py
 
 ![](data/traej.jpg) ![](data/t_traej.jpg)
 
+## Testing
+
+```
+pytest testing\static_testing.py > testing/static_logs.txt
+pytest testing\dynamic_testing.py > testing/dynamic_logs.txt
+```
 
 ## Test structure
 

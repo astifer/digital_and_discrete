@@ -14,6 +14,7 @@ from tools.utils import send_mess, send_mess_kb
 import models.keyboards as keyboards
 
 class Test():
+    
     index2letter: dict  = {
         0: "A",
         1: "B",
@@ -28,7 +29,15 @@ class Test():
         "D": 3,
     }
     
-    def __init__(self, name, description, questions, possible_answers, actual_answers, links) -> None:
+    def __init__(self, 
+                 name: str, 
+                 description: str, 
+                 questions: list, 
+                 possible_answers: list, 
+                 actual_answers: list, 
+                 links:list
+                 ) -> None:
+        
         self.name = name
         self.id = random.randint(0,10000)
         self.description = description
@@ -43,7 +52,12 @@ class Test():
         
         logging.info(f"test {self.name} created")
         
-    def run(self, user_id, event: VkEventType, longpoll: VkLongPoll, vk_api_method):
+    def run(self, 
+            user_id, 
+            event: VkEventType, 
+            longpoll: VkLongPoll, 
+            vk_api_method):
+        
         user_answers = [0]*10
         position=0
         start_time = time.time()
@@ -78,9 +92,9 @@ class Test():
         
         send_mess(event=event, vk_api_method=vk_api_method,
                   message=f"Your score is {score}, time: {form_time}") 
-        
-
+    
         return score, form_time, good_info
+          
           
     def parse_pa(self, list_of_a: list)->str:
         result = ''
@@ -105,5 +119,6 @@ class Test():
         
         if len(errors)==0:
             return ''
+        
         return info
     

@@ -8,10 +8,12 @@ from tools.utils import send_mess, check_update
 
 import requests
 import schedule, time, threading
+import subprocess
 
 
 import logging
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+
 
 def job():
     check_update(vk)
@@ -38,7 +40,6 @@ logging.info('vk_session is created')
 is_manual = False
 
 
-
 for event in longpoll.listen():
     if not(is_manual):
             vk.messages.send(
@@ -49,12 +50,12 @@ for event in longpoll.listen():
             
     if event.type == VkEventType.MESSAGE_NEW and event.to_me:
         if event.text.startswith('turn off update'):
-            logging.info('turn off update event')
+            logging.info(f'[{event.user_id}] turn off update event')
             stop_thr = True
             send_mess(event=event, vk_api_method=vk, message = 'We have turned test update off')
             
         elif event.text.startswith('turn on update'):
-            logging.info('turn off update event')
+            logging.info(f'[{event.user_id}] turn off update event')
             stop_thr = False
             schedule.every(1).minutes.do(job)
             threading.Thread(target=thr).start()

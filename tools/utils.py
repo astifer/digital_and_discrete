@@ -23,6 +23,7 @@ def send_mess(event, vk_api_method, message):
         )
     pass
 
+
 @lru_cache(maxsize=None)
 def send_mess_kb(event, vk_api_method, keyboard: VkKeyboard, message: str):
     vk_api_method.messages.send(keyboard=keyboard.get_keyboard(),

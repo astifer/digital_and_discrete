@@ -1,0 +1,14 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.3, pytest-7.4.2, pluggy-1.3.0
+rootdir: D:\discra\github\digital_and_discrete
+collected 5 items
+
+testing\static_testing.py .....                                          [100%]
+
+============================== warnings summary ===============================
+models\testik.py:16
+  D:\discra\github\digital_and_discrete\models\testik.py:16: PytestCollectionWarning: cannot collect test class 'Test' because it has a __init__ constructor (from: testing/static_testing.py)
+    class Test():
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 5 passed, 1 warning in 1.21s =========================

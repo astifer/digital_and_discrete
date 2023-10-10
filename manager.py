@@ -76,9 +76,8 @@ def welcome(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
                 position='start'
                 
             elif position=='wait for name' and event.text!='GO!':
-                name = event.text
-                user.name = name
-                send_mess_kb(event=event, vk_api_method=vk_api_method,keyboard=menu_keyboard, message=f"Hi, {name}. Here is the main menu:")
+                user.name = event.text
+                send_mess_kb(event=event, vk_api_method=vk_api_method,keyboard=menu_keyboard, message=f"Hi, {user.name}. Here is the main menu:")
                 add_user_to_list()
                 position='menu'
             
@@ -105,7 +104,7 @@ def welcome(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll):
                         send_stat(user=user, event=event, vk_api_method=vk_api_method, f_name='time_stat')
                         
                         send_mess(event=event, vk_api_method=vk_api_method, 
-                                  message=user.statistic.average_each())
+                                  message='Avarage results:\n'+user.statistic.average_each())
                         
                     send_mess_kb(event=event, vk_api_method=vk_api_method,keyboard=menu_keyboard, message=f"Here is the main menu:")
                     position='menu'
@@ -132,8 +131,7 @@ def manage_event(event: VkLongPoll.DEFAULT_EVENT_CLASS, vk_api_method, longpoll)
         logging.info('tests event')
         welcome(event=event, vk_api_method=vk_api_method, longpoll=longpoll)
         return
-        
-        
+    
     elif event.text.startswith('+'):
         logging.info('event plus!')
         message = 'oh, plus'
